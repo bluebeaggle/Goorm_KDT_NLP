@@ -12,7 +12,7 @@ print(test_images.shape)     #(10000,28,28)
 from keras import models
 from keras import layers
 network = models.Sequential()   # initialize
-network.add(layers.Dense(5142, activation = 'relu', imput_shape=(28*28)))   
+network.add(layers.Dense(512, activation = 'relu', input_shape=(28*28,)))   
 network.add(layers.Dense(10, activation='softmax'))
 
 # 3. 컴파일 단계
@@ -22,11 +22,12 @@ network.compile(optimizer = 'rmsprop', loss = 'categorical_crossentropy', metric
 train_images = train_images.reshape((60000,28*28))
 train_images = train_images.astype('float32') / 255     #0-1사이의 스케일로 조정
 
-test_images = train_images.reshape((10000,28*28))
-test_images = train_images.astype('float32') / 255
+test_images = test_images.reshape((10000,28*28))
+test_images = test_images.astype('float32') / 255
 
 # 5. label 준비하기
-from keras.utils import to_categorical
+# keras는 tensoflow에 완전히 통합되어 keras.utils import to_categorical 하면 오류 발생
+from tensorflow.keras.utils import to_categorical
 train_labels = to_categorical(train_labels)
 test_labels = to_categorical(test_labels)
 
