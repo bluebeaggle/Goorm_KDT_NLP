@@ -1,0 +1,6 @@
+1. import 모듈
+2. dataset 적재
+ - test set & train_set 전부 포함
+3. 신경망 구조 만들기
+4. 컴파일 단계
+5. 이미지 데이터 준비하기
