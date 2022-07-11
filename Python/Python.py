@@ -7,4 +7,119 @@ Original file is located at
     https://colab.research.google.com/drive/1nkxm_rfZbj5K72QxYXkVElXBnubQfFPx
 """
 
-print('Hello World')
+
+# Variable & Operator
+"""
+* 변수 : 값을 저장하는 공간 = 연산자로 대입 연산
+* 파이썬 변수의 특징 : 
+    모든 변수는 메모리 주소를 가르친다(즉, 모든것이 포인터다)
+* C언어와 다르게, 반환값을 가지지 않음
+    (a = 2) == 2 // Error 발생
+* Python 3.9 이상부터 대입과 동시에 반환값 갖기
+    (a :=2) == 2 // True
+* C언어와 같이 뒤에서부터 대입
+    a=b=2
+* int형 : Overflow가 발생하지 않음, 명시적인 Short type등이 없음
+* string형 : 따옴표로 표현, 큰or작은 따옴표 차이 없음, Unicode
+* bool 형 : if 및 while 문 사용 시 자주 사용 됨
+* None 형 : 아무것도 출력되지않음
+
+* a+= 1은 In-place 연산(객체를 수정 시도하고, 불가능할 시 새로운 객체 생성)
+* a = a+1은 Out-place 연산 (새로운 객체 생성)
+* ++a/a++연산은 존재하지 않음
+* is : 주소값이 같은가?/ is not : 주소값이 다른가?
+* in : 포함되는가? / not in : 포함되지 않는가?
+
+* 원시자료형들은 불변타입이다
+: 모든것은 객체이기 때문에 원시자료형들 역시 객체이지만, 저장된 값이 변하지 않는다
+: 모든 타입은 물리적 메모리 주소를 가르침
+: 원시자료형과 Tuple을 제외한 다른 거의 대부분 파이썬 객체는 가변타입
+: 파이썬에서 대입은 원칙적으로 메모리 주소 복사(즉,값을 복사하지않고 같은 주소를 공유)
+
+* 적당한 크기의 원시 자료형 대입은 기존 객체를 할당(불면 타입이라 상관 없음)
+    a=1;b=1; a is b;             / True
+    a=415846;b=415846; a is b; a==b;   / False,True
+    
+* Dynamic Typing
+ - 코드 실행 지점에서 데이터의 타입을 결정함
+ 
+* Implicit Type Conversion
+: bool -> int -> float -> complex
+: None타입과,str 타입은 별개
+    a = True
+    a = a+2     / a=3
+    a = a+1.5   / a=4.5
+    a = a+7.1j  / a=4.5+7.1j
+* Exzplictit Type Conversion
+: int(a), float(a),,,
+: 실수 ->정수 : 소수점 내림
+    반올림 round 함수 사용
+: 빈문자열,0,None은 False로 변환
+
+* Type Checking
+: isintance함수로 변수가 지정 타입인지 확인
+    c='12'; isintance(c,str); / True
+"""
+
+# Data Structure
+"""
+* List : 배열
+: 아무 타입이나 넣기 가능, 길이가 정해져 있지 않음
+* Index & Slicing
+    seq=[1,2,3,4,5,6,7,8,9]
+    seq[0]      / 1
+    seq[-1]     /9
+    seq[start:end:step] 형태
+        - end번째는 포함되지 않음
+    seq[:3] / [1,2,3]
+
+* List Operators
+* list + list : list 합치기
+* 대입연산자 : 값 바꾸기
+* *연산자 : 리스크 곱셈만큼 반복하여 합치기
+* in : 포함되어 있는가?
+* len : 리스트 길이 구하기
+* append : 맨뒤 요소 추가
+* extend : 맨뒤 리스트 추가
+* insert : 원하는 곳(위치)에 요소 추가
+* del : *번째 요소 삭제(위치), 예약어 형태
+* remove : 원하는 값 삭제
+
+
+* Tuple : 불변 타입
+: () 사용, 하나의 요소는 , 사용 필요 (1,)
+: 리스트의 인덱싱, 슬라이싱, 연산 사용 가능
+: 함수에서 2개 이상 요소를 반환할 때 사용
+: Tuple은 불변타입이지만, Tuple안의 요소는 가변 타입 일 수도 있음
+: str일 경우 문자 Tuple로 생각 가능 -> indexing & slicing 가능
+
+
+* Packing & Unpacking
+* Pachking : 여러 데이터를 묶기
+* Unpacking : 묶인 데이터를 풀기
+    t=[1,2,3,4,5]
+    a,b,c,_,_=t     / a=1,b=2,c=3, "_"는 관습적으로 사용하지 않는 변수에 사용
+    a,*b,c = tell   / (1,[2,3,4],5) *(Asterisk)로 남는 부분을 리스트로 묶을 수 있음
+
+
+* Dictionary : Key->Value (자료구조 Hash로 구현되어 있음)
+: {} 사용
+: 불변타입으로만 이루어져 있으면 Key로 사용 가능
+: Key값으로 Indexing                   dictionary['text']
+: Key값이 Tuple일 경우에는 괄호 생략 가능    dictionary[1,1.25]
+: Key 중복이 불가능 -> 덮어 씌어짐
+: dictionary.items()    / (['한국어',0),('영어',1),('중국어',2)모든 key와 value를 일종의 Tuple List로 반환
+: dictionary.key() -> key값 list로 반환
+: dictionary.values() -> value값 list로 반환
+
+
+* Set : Dictionary의 KeY만 모여 있는 형태
+: 중복 요소를 추가하지 않음
+: 존재하지 않는 요소 삭제는 에러 발생
+: .discard : 요소삭제, 존재하지 않을 경우 무시
+: .update : 요소 추가, 중복 무시
+: &연산자로 교집합, | 연산자로 합집합, - 연산자로 차집합, ^연산자로 베타적 합집합
+--frozenset : 불변타입
+"""
+
+
